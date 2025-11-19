@@ -1,0 +1,20 @@
+# Tencent Cloud Serverless configuration for OAuth Proxy
+component: express
+name: oauth-proxy-serverless
+
+inputs:
+  src: ./
+  entryFile: src/index.js
+  functionName: oauth-proxy-serverless
+  runtime: Nodejs18.15
+  region: ap-hongkong
+  timeout: 15
+  memorySize: 256
+  apigatewayConf:
+    protocols:
+      - https
+    environment: release
+    serviceTimeout: 15
+  environment:
+    variables:
+      OAUTH_PROXY_KEY: ${env:OAUTH_PROXY_KEY}

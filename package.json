@@ -1,0 +1,18 @@
+{
+  "name": "oauth-proxy-serverless",
+  "version": "1.0.0",
+  "description": "OAuth Proxy for serverless environments (Tencent Cloud)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "type": "module"
+}
