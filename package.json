@@ -1,18 +1,15 @@
 {
   "name": "oauth-proxy-serverless",
   "version": "1.0.0",
-  "description": "OAuth Proxy for serverless environments (Tencent Cloud)",
-  "main": "src/index.js",
+  "description": "OAuth Proxy for Cloudflare Workers",
+  "main": "src/worker.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy"
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "node-fetch": "^3.3.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "wrangler": "^3.114.15"
   },
   "type": "module"
 }
