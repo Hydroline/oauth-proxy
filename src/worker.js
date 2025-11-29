@@ -42,6 +42,7 @@ export default {
           error: "Invalid proxy key",
           bodyType: "text",
           body: "Invalid proxy key",
+          receivedKey: clientKey ?? null
         }),
         { status: 401, headers: { "content-type": "application/json" } }
       );
