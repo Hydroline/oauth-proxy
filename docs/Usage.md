@@ -8,7 +8,7 @@
 - 由 Cloudflare Worker 代为请求真实 OAuth Provider（如 Google、Microsoft 等）。
 - 将上游响应包装为规范化 JSON：`ok/status/headers/bodyType/body`。
 - 支持 JSON / 文本 / 二进制(Base64) 响应。
-- 通过 `x-proxy-key` 请求头进行鉴权，保护代理端点。
+- 通过 POST JSON 请求体内的 `key` 字段进行鉴权，保护代理端点。
 
 ## 本地开发（Cloudflare Workers + pnpm）
 
@@ -29,8 +29,8 @@ pnpm cf:dev
 ```bash
 curl -X POST http://127.0.0.1:8787/ \
   -H "Content-Type: application/json" \
-  -H "x-proxy-key: your-secret-key" \
   -d '{
+    "key": "your-secret-key",
     "url": "https://httpbin.org/get",
     "method": "GET",
     "headers": {
@@ -56,4 +56,4 @@ cd oauth-proxy
 pnpm cf:deploy
 ```
 
-部署完成后，Cloudflare 会返回 Worker 的访问 URL，将其配置为后端或插件中的 `OAUTH_PROXY_URL`，并在请求时带上同一个 `x-proxy-key`。
+部署完成后，Cloudflare 会返回 Worker 的访问 URL，将其配置为后端或插件中的 `OAUTH_PROXY_URL`，并在请求时把相同的 `key` 放在请求体中。
