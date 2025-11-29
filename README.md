@@ -1,3 +1,3 @@
-# oauth-proxy-serverless
+# oauth-proxy
 
-> Proxy middleware for OAuth services in serverless environments.
+> Proxy middleware for OAuth services in Cloudflare workers environments.

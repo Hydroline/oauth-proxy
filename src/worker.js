@@ -16,7 +16,7 @@ export default {
     }
 
     const PROXY_KEY = env.OAUTH_PROXY_KEY || env.PROXY_KEY || '';
-    const clientKey = request.headers.get('x-proxy-key');
+    const clientKey = request.headers.get('cf-oauth-proxy-key');
 
     if (!PROXY_KEY || clientKey !== PROXY_KEY) {
       return new Response(

@@ -1,7 +1,7 @@
 {
-  "name": "oauth-proxy-serverless",
+  "name": "oauth-proxy",
   "version": "1.0.0",
-  "description": "OAuth Proxy for Cloudflare Workers",
+  "description": "Proxy middleware for OAuth services in Cloudflare workers environments.",
   "main": "src/worker.js",
   "scripts": {
     "cf:dev": "wrangler dev",

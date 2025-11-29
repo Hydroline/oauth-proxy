@@ -1,7 +1,3 @@
 name = "oauth-proxy"
 main = "src/worker.js"
 compatibility_date = "2025-11-19"
-
-[vars]
-# 部署时在 Cloudflare 控制台或通过 wrangler 覆盖这个值
-OAUTH_PROXY_KEY = "change-me"
