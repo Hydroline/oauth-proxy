@@ -33,8 +33,13 @@ export default {
 
     const PROXY_KEY = env.OAUTH_PROXY_KEY || env.PROXY_KEY || "";
     const { key: clientKey } = payload || {};
+    const normalizedProxyKey =
+      typeof PROXY_KEY === "string" ? PROXY_KEY.trim() : PROXY_KEY;
+    const normalizedClientKey =
+      typeof clientKey === "string" ? clientKey.trim() : clientKey;
 
-    if (!PROXY_KEY || clientKey !== PROXY_KEY) {
+    const keysMatch = normalizedProxyKey && normalizedClientKey === normalizedProxyKey;
+    if (!keysMatch) {
       return new Response(
         JSON.stringify({
           ok: false,
@@ -42,7 +47,11 @@ export default {
           error: "Invalid proxy key",
           bodyType: "text",
           body: "Invalid proxy key",
-          receivedKey: clientKey ?? null
+          receivedKey: clientKey ?? null,
+          normalizedClientKey: normalizedClientKey ?? null,
+          serverKey: PROXY_KEY ?? null,
+          normalizedServerKey: normalizedProxyKey ?? null,
+          keysMatch
         }),
         { status: 401, headers: { "content-type": "application/json" } }
       );
