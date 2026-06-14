@@ -37,6 +37,18 @@ const ROUTE_DEFINITIONS = [
     path: /^\/oauth2\/v3\/userinfo$/,
     validateQuery: (urlObj) => urlObj.searchParams.size === 0,
   },
+  {
+    host: "avatars.githubusercontent.com",
+    method: "GET",
+    path: /^\//,
+    validateQuery: () => true,
+  },
+  {
+    host: /^lh\d+\.googleusercontent\.com$/,
+    method: "GET",
+    path: /^\//,
+    validateQuery: () => true,
+  },
 ];
 
 const jsonResponse = (payload, status = 200) => {
@@ -102,9 +114,21 @@ const pickResponseHeaders = (headers) => {
   return result;
 };
 
+const matchesRouteHost = (routeHost, hostname) => {
+  if (typeof routeHost === "string") {
+    return routeHost === hostname;
+  }
+
+  if (routeHost instanceof RegExp) {
+    return routeHost.test(hostname);
+  }
+
+  return false;
+};
+
 const matchAllowedRoute = (urlObj, method) => {
   return ROUTE_DEFINITIONS.some((route) => {
-    if (route.host !== urlObj.hostname) {
+    if (!matchesRouteHost(route.host, urlObj.hostname)) {
       return false;
     }
 
