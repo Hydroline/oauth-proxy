@@ -120,6 +120,20 @@ const matchAllowedRoute = (urlObj, method) => {
   });
 };
 
+const applyDefaultUpstreamHeaders = (targetUrl, headers) => {
+  const normalizedHeaders = new Headers(headers);
+
+  // GitHub REST API requires a User-Agent header even for simple OAuth userinfo probes.
+  if (
+    targetUrl.hostname === "api.github.com" &&
+    !normalizedHeaders.has("user-agent")
+  ) {
+    normalizedHeaders.set("user-agent", "hydcraft-oauth-proxy");
+  }
+
+  return normalizedHeaders;
+};
+
 const buildUpstreamBody = (payload, method) => {
   if (method === "GET" || method === "HEAD" || payload.body == null) {
     return undefined;
@@ -275,7 +289,10 @@ export default {
 
     const fetchInit = {
       method: upstreamMethod,
-      headers: new Headers(normalizeUpstreamHeaders(headers)),
+      headers: applyDefaultUpstreamHeaders(
+        targetUrl,
+        normalizeUpstreamHeaders(headers)
+      ),
       body: buildUpstreamBody({ bodyType, body }, upstreamMethod),
     };
 
